@@ -10,19 +10,23 @@
 <p th:text="'Name: ' + ${user.getName()}">name</p>
 <p th:text="'Age: ' + ${user.getAge()}">age</p>
 <p th:text="'Email: ' + ${user.getEmail()}">email</p>
+<div th:each="role : ${user.getRoles()}">
+    <td th:text="'Role: ' + ${role.getRole()}" >
+    <br>
+</div>
 <br/>
 
-<form th:method="GET" th:action="@{/users}">
+<form th:method="GET" th:action="@{/admin}">
     <input type="submit" value="Cancel">
 </form>
 <br/>
 
-<form th:method="GET" th:action="@{/users/{id}/edit(id=${user.getId()})}">
+<form th:method="GET" th:action="@{/admin/{id}/edit(id=${user.getId()})}">
     <input type="submit" value="Edit">
 </form>
 <br/>
 
-<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
+<form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
     <input type="submit" value="Delete!">
 </form>
 
