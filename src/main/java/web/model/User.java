@@ -16,26 +16,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotEmpty(message = "Name should not be empty")
+    @NotEmpty(message = "Длина имени должна составлять от 2 до 30 символов")
     @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
     @Column(name = "name")
     private String name;
 
-    @Min(value = 0, message = "Age should be greater than 0")
+    @Min(value = 0, message = "Возраст должно быть больше 0")
     @Column(name = "age")
     private int age;
 
-    @NotEmpty(message = "Email should not be empty")
-    @Email(message = "Email should be valid")
+    @NotEmpty(message = "Email не должен быть пустым")
+    @Email(message = "Email должно быть действительным")
     @Column(name = "email")
     private String email;
 
-    @NotEmpty(message = "Password should not be empty")
-    @Size(min = 4, message = "The password must be at least 2")
+    @NotEmpty(message = "Пароль не должен быть пустымy")
+    @Size(min = 4, message = "Пароль должен быть не менее 2 cимволов в длину")
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @NotEmpty(message = "У пользователя должна быть хотя бы одна роль")
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE, CascadeType.MERGE}, fetch=FetchType.EAGER)
     @JoinTable(
             name = "users_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -45,10 +46,12 @@ public class User {
     public User() {
     }
 
-    public User(String name, int age, String email) {
+    public User(String name, int age, String email, String password, List<Role> roles) {
         this.name = name;
         this.age = age;
         this.email = email;
+        this.password = password;
+        this.roles = roles;
     }
 
     public int getId() {

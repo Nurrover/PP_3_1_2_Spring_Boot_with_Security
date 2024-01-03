@@ -3,11 +3,11 @@ package web.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import web.model.Role;
 import web.model.User;
 import web.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,17 +25,17 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email).get();
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Transactional
     public void updateUser(User newUser) {
-        User oldUser = userRepository.findByEmail(newUser.getEmail()).get();
+        User oldUser = findById(newUser.getId());
         oldUser.setName(newUser.getName());
         oldUser.setAge(newUser.getAge());
-        oldUser.setPassword(newUser.getPassword());
-        userRepository.save(oldUser);
+        oldUser.setRoles(newUser.getRoles());
+        saveUser(oldUser);
     }
 
     @Transactional(readOnly = true)
@@ -51,16 +51,5 @@ public class UserService {
     @Transactional
     public void removeUserById(int id) {
         userRepository.deleteById(id);
-    }
-
-    @Transactional
-    public void removeRoleByIdAndRole(int id, String role) {
-        findById(id).getRoles().removeIf(r -> role.equals(r.getRole()));
-    }
-
-    @Transactional
-    public void updateRoles(int id, Role role) {
-        User user = findById(id);
-        user.getRoles().add(role);
     }
 }

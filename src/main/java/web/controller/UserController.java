@@ -24,27 +24,25 @@ public class UserController {
 
     @GetMapping("")
     public String showInfoUser(Model model, Principal principal) {
-        model.addAttribute("user", userService.findByEmail(principal.getName()));
-        return "user/show-info";
+        model.addAttribute("user", userService.findByEmail(principal.getName()).get());
+        return "user/show-profile";
     }
 
     @GetMapping("/edit")
     public String editNameAgePassword(Model model, Principal principal) {
-        model.addAttribute("user", userService.findByEmail(principal.getName()));
+        model.addAttribute("user", userService.findByEmail(principal.getName()).get());
         return "user/edit";
     }
 
     @PatchMapping("")
     public String updateInfoUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-
         if (bindingResult.hasErrors()) {
             return "user/edit";
         }
 
 
-
         userService.updateUser(user);
 
-        return "user/show-info";
+        return "user/show-profile";
     }
 }
