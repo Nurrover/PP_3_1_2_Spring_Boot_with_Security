@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,11 +21,24 @@
     <input type="password" th:field="*{password}" id="password">
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
 
-    <input type="hidden" th:field="*{email}" id="email">
-    <br/>
+    <input type="hidden" th:field="*{email}" id="email" th:value="*{email}">
+    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Password error</div>
 
+
+    <input type="hidden" id="${#ids.next('roles')}"
+           th:each="role : ${user.getRoles()}"
+           th:value="${role.getId()}"
+           th:field="*{roles}" >
+    <div style="color:red" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">Password error</div>
+
+    <br/>
     <input type="submit" value="Update!">
 </form>
+
+<form th:method="GET" th:action="@{/user}">
+    <input type="submit" value="Cancel">
+</form>
+<br/>
 
 </body>
 </html>

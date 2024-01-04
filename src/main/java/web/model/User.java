@@ -36,7 +36,7 @@ public class User {
     private String password;
 
     @NotEmpty(message = "У пользователя должна быть хотя бы одна роль")
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE, CascadeType.MERGE}, fetch=FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
     @JoinTable(
             name = "users_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -51,7 +51,6 @@ public class User {
         this.age = age;
         this.email = email;
         this.password = password;
-        this.roles = roles;
     }
 
     public int getId() {

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
+import web.service.RoleService;
 import web.service.UserService;
 
 import javax.validation.Valid;
@@ -16,10 +17,12 @@ import java.security.Principal;
 public class UserController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("")
@@ -30,7 +33,10 @@ public class UserController {
 
     @GetMapping("/edit")
     public String editNameAgePassword(Model model, Principal principal) {
-        model.addAttribute("user", userService.findByEmail(principal.getName()).get());
+        User user = userService.findByEmail(principal.getName()).get();
+
+        model.addAttribute("user", user);
+        model.addAttribute("role-user", roleService.findRole("ROLE_USER"));
         return "user/edit";
     }
 

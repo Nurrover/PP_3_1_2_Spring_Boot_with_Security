@@ -17,6 +17,13 @@
 </form>
 <br/>
 
+<div th:each="role : ${user.getRoles()}" th:if="${role.getRole().equals('ROLE_ADMIN')}">
+    <form th:method="GET" th:action="@{/admin}">
+        <input type="submit" value="Cancel admin panel">
+    </form>
+    <br/>
+</div>
+
 <form th:method="POST" th:action="@{/logout}">
     <input type="submit" value="Logout">
 </form>
