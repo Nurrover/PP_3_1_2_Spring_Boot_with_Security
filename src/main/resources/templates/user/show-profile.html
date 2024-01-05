@@ -12,11 +12,6 @@
 <div></div>
 <br/>
 
-<form th:method="GET" th:action="@{user/edit}">
-    <input type="submit" value="Edit info">
-</form>
-<br/>
-
 <div th:each="role : ${user.getRoles()}" th:if="${role.getRole().equals('ROLE_ADMIN')}">
     <form th:method="GET" th:action="@{/admin}">
         <input type="submit" value="Cancel admin panel">

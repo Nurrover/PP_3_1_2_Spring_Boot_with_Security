@@ -30,12 +30,11 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @NotEmpty(message = "Пароль не должен быть пустымy")
+    @NotEmpty(message = "Пароль не должен быть пустым")
     @Size(min = 4, message = "Пароль должен быть не менее 2 cимволов в длину")
     @Column(name = "password")
     private String password;
 
-    @NotEmpty(message = "У пользователя должна быть хотя бы одна роль")
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
     @JoinTable(
             name = "users_role",
