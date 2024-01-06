@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import web.model.User;
-import web.service.UserService;
+import web.service.UserServiceImpl;
 
 @Component
 public class EmailValidator implements Validator {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     @Autowired
-    public EmailValidator(UserService userService) {
+    public EmailValidator(UserServiceImpl userService) {
         this.userService = userService;
     }
 

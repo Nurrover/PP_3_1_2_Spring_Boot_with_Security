@@ -7,7 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.RoleService;
-import web.service.UserService;
+import web.service.UserServiceImpl;
 import web.util.EmailValidator;
 
 import javax.validation.Valid;
@@ -16,12 +16,12 @@ import javax.validation.Valid;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
     private final RoleService roleService;
     private final EmailValidator emailValidator;
 
     @Autowired
-    public AdminController(UserService userService, RoleService roleService, EmailValidator emailValidator) {
+    public AdminController(UserServiceImpl userService, RoleService roleService, EmailValidator emailValidator) {
         this.userService = userService;
         this.roleService = roleService;
         this.emailValidator = emailValidator;
@@ -73,7 +73,7 @@ public class AdminController {
             return "admin/edit";
         }
 
-        userService.updateUser(user);
+        userService.updateUser(user, id);
         return "admin/show-user";
     }
 

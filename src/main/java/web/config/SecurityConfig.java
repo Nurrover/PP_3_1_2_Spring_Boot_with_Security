@@ -8,17 +8,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import web.service.SecurityService;
+import web.service.UserService;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final LoginSuccessHandler successUserHandler;
-    private final SecurityService securityService;
+    private final UserService userService;
 
     @Autowired
-    public SecurityConfig(LoginSuccessHandler successUserHandler, SecurityService securityService) {
+    public SecurityConfig(LoginSuccessHandler successUserHandler, UserService userService) {
         this.successUserHandler = successUserHandler;
-        this.securityService = securityService;
+        this.userService = userService;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(securityService)
+        auth.userDetailsService(userService)
                 .passwordEncoder(getPasswordEncoder());
     }
 
