@@ -1,5 +1,8 @@
 package web.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
@@ -36,6 +39,7 @@ public class User {
     private String password;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.EXTRA)
     @JoinTable(
             name = "users_role",
             joinColumns = @JoinColumn(name = "user_id"),
