@@ -1,6 +1,7 @@
 package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,12 +20,14 @@ public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
     private final EmailValidator emailValidator;
+    private final PasswordEncoder encoder;
 
     @Autowired
-    public AdminController(UserService userService1, RoleService roleService, EmailValidator emailValidator) {
+    public AdminController(UserService userService1, RoleService roleService, EmailValidator emailValidator, PasswordEncoder encoder) {
         this.userService = userService1;
         this.roleService = roleService;
         this.emailValidator = emailValidator;
+        this.encoder = encoder;
     }
 
 
@@ -55,6 +58,7 @@ public class AdminController {
             return "admin/new";
         }
 
+        user.setPassword(encoder.encode(user.getPassword()));
         userService.saveUser(user);
         return "redirect:/admin";
     }
