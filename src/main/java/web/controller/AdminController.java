@@ -71,13 +71,12 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                             @PathVariable("id") int id) {
+    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "admin/edit";
         }
 
-        userService.updateUser(user, id);
+        userService.updateUser(user);
         return "admin/show-user";
     }
 

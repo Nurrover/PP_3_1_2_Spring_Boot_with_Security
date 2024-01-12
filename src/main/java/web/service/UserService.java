@@ -10,7 +10,7 @@ public interface UserService {
 
     Optional<User> findByEmail(String email);
 
-    void updateUser(User newUser, int id);
+    void updateUser(User newUser);
 
     List<User> getAllUsers();
 

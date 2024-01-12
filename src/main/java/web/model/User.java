@@ -30,7 +30,7 @@ public class User {
 
     @NotEmpty(message = "Email не должен быть пустым")
     @Email(message = "Email должно быть действительным")
-    @Column(name = "email")
+    @Column(unique = true, name = "email")
     private String email;
 
     @NotEmpty(message = "Пароль не должен быть пустым")
